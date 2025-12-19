@@ -59,6 +59,10 @@ pip install -r requirements.txt
 # Rode o bot
 python rpa/bot.py
 🔗 Documentação da API
+Inicie a API com os seguintes comandos:
+cd api
+uvicorn main:app 
+
 Com o servidor rodando, acesse a documentação interativa:
 
 Swagger UI: http://localhost:8000/docs
