@@ -1,0 +1,11 @@
+services:
+  db:
+    image: postgres:18
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: desafio_python
+    volumes:
+      - ./api/database/initdb:/docker-entrypoint-initdb.d:ro

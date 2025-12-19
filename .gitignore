@@ -1,0 +1,14 @@
+.env
+venv/
+
+
+# Python - Arquivos temporários e cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Ignorar cache do Python
+__pycache__/
+*.py[cod]
+*$py.class
