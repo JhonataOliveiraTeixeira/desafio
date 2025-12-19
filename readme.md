@@ -48,7 +48,12 @@ bash
 Copiar código
 cd api
 python -m database.seed
-4) Executando o Bot RPA
+4) Iniciando a API
+bash
+Copiar código
+cd api
+uvicorn main:app --reload
+5) Executando o Bot RPA
 Em um novo terminal (na raiz do projeto):
 
 bash
@@ -56,20 +61,29 @@ Copiar código
 # Instale as dependências caso ainda não tenha feito
 pip install -r requirements.txt
 
-🔗 Documentação da API
-Inicie a API com os seguintes comandos:
-cd api
-uvicorn main:app 
+# Rode o bot
+python rpa/bot.py
+6) Executando os testes E2E (Selenium)
+Requer a API rodando e o banco disponível.
 
+bash
+Copiar código
+# (Opcional) Instale dependências caso necessário
+pip install -r requirements.txt
+
+# Execute os testes E2E
+pytest -m e2e -v
+Caso seus testes E2E estejam em um arquivo específico, você também pode rodar assim:
+
+bash
+Copiar código
+pytest tests/e2e -v
+🔗 Documentação da API
 Com o servidor rodando, acesse a documentação interativa:
 
 Swagger UI: http://localhost:8000/docs
 
 ReDoc: http://localhost:8000/redoc
-
-# Rode o bot
-python rpa/bot.py
-
 
 📂 Estrutura de Pastas
 plaintext
@@ -79,6 +93,8 @@ Copiar código
 │   ├── router/         # Rotas e Endpoints
 │   └── services/       # Lógica de negócio
 ├── rpa/                # Scripts de automação (Selenium)
+├── tests/              # Testes (unit/integration/e2e)
+│   └── e2e/            # Testes end-to-end (Selenium)
 ├── .env                # Variáveis sensíveis (não incluído no git)
 ├── .gitignore          # Arquivos ignorados
 ├── docker-compose.yml  # Configuração Docker
