@@ -1,96 +1,91 @@
-📊 Desafio Técnico: Monitoramento de Atos Normativos
-Este projeto implementa uma solução automatizada para captura, armazenamento e análise de atos normativos da Receita Federal. A solução é composta por um robô de automação (RPA), uma API RESTful para persistência e um dashboard para análise de dados.
+# 📊 Sistema de Monitoramento de Atos Normativos (Receita Federal)
 
-🛠️ Tecnologias Utilizadas
-Linguagem: Python 3.10+
+Solução completa de **RPA + API** para captura, processamento e análise de dados do portal **SIJUT**.
 
-Framework Web: FastAPI
+---
 
-Banco de Dados: PostgreSQL
+## 🚀 Tecnologias e Ferramentas
 
-ORM: SQLModel (SQLAlchemy)
+| Área | Tecnologia |
+|------|------------|
+| Backend | FastAPI |
+| Banco de Dados | PostgreSQL |
+| Automação | Selenium |
+| Container | Docker / Docker Compose |
 
-Automação (RPA): Selenium WebDriver
+---
 
-Autenticação: JWT (JSON Web Token) e Passlib (Bcrypt)
+## 🛠️ Funcionalidades Principais
 
-Containerização: Docker e Docker Compose
+- **RPA Inteligente:** Automação com Selenium que contorna limitações de interface via JavaScript e extrai dados históricos.
+- **API RESTful:** Endpoints para CRUD completo com persistência em PostgreSQL.
+- **Segurança:** Autenticação via JWT (JSON Web Tokens) e proteção de rotas.
+- **Dashboard:** Endpoints de agregação para métricas por **Órgão/Unidade**, **Tipo de Ato** e **período**.
+- **Exclusão Lógica:** Registros removidos permanecem no banco com a flag `deleted`, garantindo integridade.
+- **Logs do RPA:** Armazena tempo de execução, volume de dados capturados e erros.
 
-📋 Requisitos do Sistema
-Docker e Docker Compose instalados.
+---
 
-Google Chrome instalado (para o modo não-headless do RPA).
+## ⚙️ Instalação e Execução
 
-Python 3.10 ou superior (caso deseje rodar fora do Docker).
+### 1) Configuração do Ambiente
 
-🚀 Instruções de Execução (Passo a Passo)
-1. Clonar o Repositório e Configurar Ambiente
-Bash
+Crie um arquivo `.env` na raiz do projeto:
 
-git clone <url-do-seu-repositorio>
-cd desafio-python-rpa
-2. Configurar Variáveis de Ambiente
-Crie um arquivo .env na raiz do projeto seguindo o modelo abaixo:
-
-Snippet de código
-
-DATABASE_URL=postgresql://user:password@db:5432/desafio_python
+```env
+DATABASE_URL=postgresql://user:password@localhost:5432/desafio_python
 ADMIN_USER=admin
-ADMIN_PASSWORD=admin_password_escolhida
-SECRET_KEY=uma_chave_secreta_para_jwt
-3. Rodar com Docker Compose
-Este comando sobe a API e o Banco de Dados automaticamente:
-
-Bash
-
+ADMIN_PASSWORD=suasenha
+SECRET_KEY=suachavejwt
+2) Subindo os Containers (Banco e API)
+bash
+Copiar código
 docker-compose up -d --build
-4. Instalação de Dependências (Local)
-Para rodar o bot RPA, é necessário instalar as dependências no seu ambiente local ou venv:
+3) Populando o Banco (Seeds)
+Para criar o usuário administrador e dados iniciais:
 
-Bash
-
-python -m venv venv
-source venv/bin/scripts/activate  # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-5. Popular Banco e Criar Usuário Admin
-Execute o script de seed para garantir que o banco tenha as tabelas e o usuário administrador:
-
-Bash
-
+bash
+Copiar código
+cd api
 python -m database.seed
-6. Executar o Robô RPA
-Bash
+4) Executando o Bot RPA
+Em um novo terminal (na raiz do projeto):
 
+bash
+Copiar código
+# Instale as dependências caso ainda não tenha feito
+pip install -r requirements.txt
+
+# Rode o bot
 python rpa/bot.py
-🔌 Documentação da API
-A API segue os padrões RESTful e possui documentação automática:
+🔗 Documentação da API
+Com o servidor rodando, acesse a documentação interativa:
 
 Swagger UI: http://localhost:8000/docs
 
-Redoc: http://localhost:8000/redoc
+ReDoc: http://localhost:8000/redoc
 
-Endpoints Principais
-POST /token: Autenticação e obtenção do token de acesso.
+📂 Estrutura de Pastas
+plaintext
+Copiar código
+├── api/                # Código fonte da API FastAPI
+│   ├── database/       # Conexão, models e seeds
+│   ├── router/         # Rotas e Endpoints
+│   └── services/       # Lógica de negócio
+├── rpa/                # Scripts de automação (Selenium)
+├── .env                # Variáveis sensíveis (não incluído no git)
+├── .gitignore          # Arquivos ignorados
+├── docker-compose.yml  # Configuração Docker
+└── requirements.txt    # Dependências do projeto
+✅ Requisitos Atendidos (Tarefa 2)
+ CRUD completo com suporte a filtros e busca (search).
 
-GET /atos/: Listagem de atos com filtros de data e busca por texto.
+ Dashboard com dados tratados e agregados.
 
-GET /dashboard/: Dados tratados para visualização (totalizadores por órgão/tipo).
+ Logs do RPA com tempo de execução e volume de dados.
 
-DELETE /atos/{id}: Exclusão lógica do registro.
+ Autenticação JWT protegendo os endpoints.
 
-📁 Estrutura do Projeto
-Plaintext
+ Exclusão lógica implementada com sucesso.
 
-├── database/           # Modelos SQLModel, conexão e seeds
-├── router/             # Definição das rotas da API
-├── services/           # Lógica de negócio e integração com banco
-├── rpa/                # Script bot.py e utilitários de scraping
-├── .env                # Variáveis de ambiente
-├── docker-compose.yml  # Orquestração de containers
-└── main.py             # Ponto de entrada da aplicação FastAPI
-📌 Diferenciais Implementados
-Exclusão Lógica: Registros deletados não são removidos fisicamente, apenas marcados como deleted.
-
-Resiliência no RPA: Uso de seletores robustos e execução de scripts via JavaScript para contornar limitações de renderização do portal SIJUT.
-
-Logs Detalhados: Registro automático de tempo de execução e performance de cada ciclo do robô.
+Desenvolvido para o Desafio Técnico de Backend/RPA.
